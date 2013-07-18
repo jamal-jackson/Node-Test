@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		#tweetsContainer{width:100%;}
+		#tweets{width:90%;padding:15px 5%;}
+		#tweets li{float:left;width:40%;margin:15px 3%;}
+		@media only screen and (min-width : 320px) and (max-width : 480px) {
+			#tweets li{width:100% !important;}
+		}
+	</style>
+	<script src="socket.io/socket.io.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+</head>
+<body>
+<div id="#tweetsContainer">
+	<ul id="tweets"></ul>
+</div>
+
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		var $container = $('#tweets'),
+			socket = io.connect('http://localhost:3000'),
+			template = $('#tweetTemplate');
+			
+ 
+	    socket.on('twitter', function(data) {
+	    	console.debug(data);
+	    	$('#tweets').prepend('<li>' + data.text + '</li>');
+	    	if($('#tweets li').length > 10){
+	    		$('#tweets li:last-child').remove();
+	    	}
+	    });
+	});
+
+
+
+</script>
+
+</body>
+</html>
+
